@@ -43,7 +43,13 @@ class WarehouseManager:
         return False
     
     def add_item(self, warehouse_id, item_name, quantity):
-        """Add an item to a warehouse or increase its quantity."""
+        """Add an item to a warehouse or increase its quantity.
+        
+        Note: Each item gets its own Varasto instance with the warehouse's capacity.
+        This is a simplified model where each item type has independent storage tracking.
+        In a real system with shared capacity, you'd need additional logic to enforce
+        the total capacity constraint across all items.
+        """
         warehouse = self.get_warehouse(warehouse_id)
         if not warehouse:
             return False

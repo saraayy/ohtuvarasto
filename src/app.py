@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from warehouse_manager import WarehouseManager
 
 app = Flask(__name__)
+# NOTE: This is a development secret key. In production, use environment variables
+# or a secure configuration system: app.secret_key = os.environ.get('SECRET_KEY')
 app.secret_key = 'dev-secret-key-change-in-production'
 
 # Create a global warehouse manager
@@ -178,4 +180,8 @@ def delete_item(warehouse_id, item_name):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Debug mode should only be enabled during development
+    # In production, use a proper WSGI server like gunicorn
+    import os
+    debug_mode = os.environ.get('FLASK_DEBUG', 'False').lower() == 'true'
+    app.run(debug=debug_mode)
